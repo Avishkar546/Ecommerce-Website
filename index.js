@@ -4,6 +4,7 @@ import colors from "colors";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import connectDB from "./Config/db.js";
+import router from "./Routes/Auth.js";
 
 //rest object
 const app = express();
@@ -16,11 +17,14 @@ connectDB();
 
 app.use(express.json());
 // It is middleware which logs the request. Basically used in production no need in deployment.
-app.use(morgan('dev')); 
+app.use(morgan('dev'));
 
 app.get("/", (req, res) => {
   res.send("Node js Ecommerce project");
 });
+
+// Use the authentication route
+app.use('/api/v1/auth', router);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, (req, res) => {
