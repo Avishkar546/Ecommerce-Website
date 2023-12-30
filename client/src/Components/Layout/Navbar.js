@@ -11,20 +11,11 @@ const Navbar = () => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
                     <Link to="/" className="navbar-brand"><GiShoppingBag /> Ecommerce App</Link>
-                    {/* Navbar Left side */}
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                    {/* Navbar right side */}
+                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li className="nav-item">
                             <NavLink to="/" className="nav-link" aria-current="page">Home</NavLink>
                         </li>
-                        <li className="nav-item">
-                            <NavLink to="/about" className="nav-link">About</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink to="/policy" className="nav-link">Policy</NavLink>
-                        </li>
-                    </ul>
-                    {/* Navbar right side */}
-                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li className="nav-item">
                             <NavLink to="/product" className="nav-link">Category</NavLink>
                         </li>
