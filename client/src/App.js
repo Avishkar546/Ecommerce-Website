@@ -7,6 +7,7 @@ import Policy from "./Pages/Policy";
 import Contact from "./Pages/Contact";
 import PageNotFound from "./Pages/PageNotFound";
 import Register from "./Pages/Auth/Register";
+import Login from "./Pages/Auth/Login";
 function App() {
   return (
     <Router>
@@ -19,6 +20,7 @@ function App() {
             <Route path="/policy" element={<Policy />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/register" element={<Register />}></Route>
+            <Route path="/login" element={<Login />}></Route>
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Layout>

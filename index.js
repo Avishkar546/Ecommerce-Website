@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import connectDB from "./Config/db.js";
 import router from "./Routes/Auth.js";
+import cors from "cors";
 
 //rest object
 const app = express();
@@ -16,6 +17,7 @@ dotenv.config(); //
 connectDB();
 
 app.use(express.json());
+app.use(cors());
 // It is middleware which logs the request. Basically used in production no need in deployment.
 app.use(morgan('dev'));
 
