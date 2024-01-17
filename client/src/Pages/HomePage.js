@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Helmet } from 'react-helmet'
-const HomePage = ({title, description}) => {
+import { useAuth } from '../Context/AuthContext'
+
+const HomePage = ({ title, description }) => {
+
+  const [auth, setAuth] = useAuth();
+
   return (
+
     <div>
       <Helmet>
         <meta charSet="utf-8" />
@@ -10,6 +16,7 @@ const HomePage = ({title, description}) => {
         <meta name="keyword" content='Shopping, Ecommerce, Product, Purchase, Shopify, Buying, Mobiles, Shirt, Electronics, Clothes, Pants, T-Shirt'></meta>
       </ Helmet>
       <h1>This is Homepage</h1>
+      <pre>{JSON.stringify(auth, null, 4)}</pre>
     </div>
   )
 }

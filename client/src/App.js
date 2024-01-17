@@ -8,24 +8,36 @@ import Contact from "./Pages/Contact";
 import PageNotFound from "./Pages/PageNotFound";
 import Register from "./Pages/Auth/Register";
 import Login from "./Pages/Auth/Login";
+import Dashboard from "./Pages/User/Dashboard";
+import PrivateRoute from "./Components/Route/Private";
+// import Forgot_password from "./Pages/Auth/forgot_password";
 function App() {
   return (
+
     <Router>
       <div className="App">
         <Layout>
           <Routes>
+
             <Route path="/" element={<HomePage title={"Home - Best Offers"} description={"This is description"} />} />
+            <Route path="/dashboard" element={<PrivateRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
             <Route path="/about" element={<About title={"About us"} description={"This is description"} />} />
             <Route path="/product" element={<Product title={"Our products"} description={"This is description"} />} />
             <Route path="/policy" element={<Policy />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/register" element={<Register />}></Route>
             <Route path="/login" element={<Login />}></Route>
+            {/* <Route path="/forgot-password" element={<Forgot_password />}> </Route>
+            <Route path="/reset-password" element={<Forgot_password />}> </Route> */}
             <Route path="*" element={<PageNotFound />} />
+
           </Routes>
         </Layout>
       </div>
     </Router>
+
   );
 }
 

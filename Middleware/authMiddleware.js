@@ -6,7 +6,7 @@ export const fetchUser = (req, res, next) => {
     const token = req.header("Authorization");
     // If no token
     if (!token) {
-        return res.status(401).json({ message: 'Unauthorized - No token provided' });
+        return res.status(401).json({ success: false, message: 'Unauthorized - No token provided' });
     }
 
     try {
@@ -20,7 +20,7 @@ export const fetchUser = (req, res, next) => {
         next();
     } catch (error) {
         console.error(error);
-        res.status(401).json({ message: 'Unauthorized - Invalid token' });
+        res.status(401).json({ success: false, message: 'Unauthorized - Invalid token' });
     }
 };
 
@@ -29,7 +29,7 @@ export const isAdmin = async (req, res, next) => {
     try {
         const user = await User.findById(req.user._id);
         if (user.role !== 1) {
-            return res.status(401).json({ msg: "Unauthorized access to Admin portal" });
+            return res.status(401).json({ message: "Unauthorized access to Admin portal" });
         }
         else {
             next();

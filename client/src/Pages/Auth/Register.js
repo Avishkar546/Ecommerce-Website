@@ -10,7 +10,8 @@ const Register = () => {
         email: "",
         password: "",
         phone: "",
-        address: ""
+        address: "",
+        question:""
     });
 
     const handleChange = (e) => {
@@ -23,7 +24,7 @@ const Register = () => {
         // console.log(data);
         try {
             const response = await axios.post("http://localhost:8080/api/v1/auth/register", {
-                name: data.name, email: data.email, password: data.password, phone: data.phone, address: data.address
+                name: data.name, email: data.email, password: data.password, phone: data.phone, address: data.address, question:data.question
             })
             console.log(response);
             if (response.data.success) {
@@ -38,11 +39,11 @@ const Register = () => {
                 email: "",
                 password: "",
                 phone: "",
-                address: ""
+                address: "",
+                question:""
             })
         } catch (error) {
             toast.error("Something went wrong");
-            // console.log(error);
         }
 
     }
@@ -64,6 +65,9 @@ const Register = () => {
                 </div>
                 <div className="form-group m-4">
                     <textarea type="Address" className="form-control" id="Address" name='address' value={data.address} placeholder="Address" onChange={handleChange} required />
+                </div>
+                <div className="form-group m-4">
+                    <input type="text" className="form-control" id="question" name='question' value={data.question} placeholder="Which is you favourite Sports" onChange={handleChange} required />
                 </div>
                 <button type="submit" className="btn btn-primary text-center mt-3">Submit</button>
             </form>
