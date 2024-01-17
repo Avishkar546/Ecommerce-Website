@@ -4,13 +4,13 @@ import { useAuth } from "../../Context/AuthContext";
 import { Outlet } from "react-router-dom";
 import Spinner from "../Spinner";
 
-export const PrivateRoute = () => {
+export const AdminRoute = () => {
     const [auth] = useAuth();
     const [ok, setOk] = useState(false); // To check if user is login or not and render corresponding component
 
     useEffect(() => {
         const authCheck = async () => {
-            const res = await axios.get("http://localhost:8080/api/v1/auth/user-auth", {
+            const res = await axios.get("http://localhost:8080/api/v1/auth/admin-auth", {
                 headers: {
                     "Authorization": auth?.token
                 }
@@ -29,4 +29,4 @@ export const PrivateRoute = () => {
 
 }
 
-export default PrivateRoute
+export default AdminRoute

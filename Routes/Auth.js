@@ -16,7 +16,7 @@ router.get("/user-auth", fetchUser, (req, res) => {
 
 // Protected route for Admin
 router.get("/admin-auth", fetchUser, isAdmin, (req, res) => {
-    res.send({ success: true, message: "Authenticated User" });
+    res.send({ success: true, message: "Admin User" });
 })
 
 export default router;

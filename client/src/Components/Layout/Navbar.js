@@ -34,7 +34,7 @@ const Navbar = () => {
                         <li className="nav-item">
                             <NavLink to="/product" className="nav-link">Category</NavLink>
                         </li>
-                        {!localStorage.getItem('auth') ?
+                        {!localStorage.getItem('auth') ? (
                             <>
                                 <li className="nav-item">
                                     <NavLink to="/register" className="nav-link">Register</NavLink>
@@ -42,10 +42,37 @@ const Navbar = () => {
                                 <li className="nav-item">
                                     <NavLink to="/login" className="nav-link">Login</NavLink>
                                 </li>
-                            </> :
-                            <li className="nav-item">
-                                <button onClick={handleClick} className="nav-link">Logout</button>
-                            </li>
+                            </>) :
+                            // ( <li className="nav-item dropdown">
+                            //     <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            //         User
+                            //     </a>
+                            //     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                            //         <NavLink to="/dashboard" className="dropdown-item">
+                            //             Dashboard
+                            //         </NavLink>
+                            //         <button onClick={handleClick} className="dropdown-item">
+                            //             Logout
+                            //         </button>
+                            //     </div>
+                            // </li>)
+                            <>
+                                <li className="nav-item">
+                                    <NavLink to={`/dashboard/${auth?.user?.role === 1? "admin" : "user"}`} className="nav-link"> Dashboard </NavLink>
+                                </li>
+                                <li className="nav-item">
+                                    <button onClick={handleClick} className="nav-link"> Logout</button>
+                                </li>
+                            </>
+                            // <li className="nav-item dropdown">
+                            //     <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            //         User
+                            //     </a>
+                            //     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                            //         <NavLink to="/dashboard" className="dropdown-item" href="#">Dashboard</NavLink>
+                            //         <button onClick={handleClick} className="nav-link">Logout</button>
+                            //     </div>
+                            // </li>
                         }
 
                         <li className="nav-item">
@@ -53,8 +80,8 @@ const Navbar = () => {
                         </li>
                     </ul>
                 </div>
-            </div>
-        </nav>
+            </div >
+        </nav >
     )
 }
 export default Navbar
