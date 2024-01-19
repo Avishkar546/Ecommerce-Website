@@ -1,6 +1,6 @@
 import Layout from "./Components/Layout/Layout";
 import HomePage from "./Pages/HomePage";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import About from "./Pages/About";
 import Product from "./Pages/Product";
 import Policy from "./Pages/Policy";
@@ -12,8 +12,12 @@ import Dashboard from "./Pages/User/Dashboard";
 import PrivateRoute from "./Components/Route/Private";
 import AdminRoute from "./Components/Route/AdminRoute";
 import AdminDashboard from "./Pages/Admin/AdminDashboard";
-// import Forgot_password from "./Pages/Auth/forgot_password";
-function App() {
+import CreateCategory from './Pages/Admin/CreateCategory';
+import CreateProduct from './Pages/Admin/CreateProduct';
+import TotalOrders from './Pages/Admin/TotalOrders';
+import TotalRevenue from "./Pages/Admin/TotalRevenue";
+import Orders from "./Pages/User/Orders";
+const App = () => {
   return (
 
     <Router>
@@ -22,10 +26,21 @@ function App() {
           <Routes>
 
             <Route path="/" element={<HomePage title={"Home - Best Offers"} description={"This is description"} />} />
+
             <Route path="/dashboard" element={<PrivateRoute />}>
-              <Route path="user" element={<Dashboard />} />
-              <Route path="admin" element={<AdminDashboard />}></Route>
+              <Route path="user/profile" element={<Dashboard />} />
+              <Route path="user/orders" element={<Orders />} />
             </Route>
+
+            {/*Admin Routing */}
+            <Route path="/dashboard" element={<AdminRoute />}>
+              <Route path="admin/profile" element={<AdminDashboard />}></Route>
+              <Route path="admin/create-category" element={<CreateCategory />}></Route>
+              <Route path="admin/create-product" element={<CreateProduct />}></Route>
+              <Route path="admin/total-orders" element={<TotalOrders />}></Route>
+              <Route path="admin/total-revenue" element={<TotalRevenue />}></Route>
+            </Route>
+
             <Route path="/about" element={<About title={"About us"} description={"This is description"} />} />
             <Route path="/product" element={<Product title={"Our products"} description={"This is description"} />} />
             <Route path="/policy" element={<Policy />} />

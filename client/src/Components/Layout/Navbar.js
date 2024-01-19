@@ -58,7 +58,7 @@ const Navbar = () => {
                             // </li>)
                             <>
                                 <li className="nav-item">
-                                    <NavLink to={`/dashboard/${auth?.user?.role === 1? "admin" : "user"}`} className="nav-link"> Dashboard </NavLink>
+                                    <NavLink to={`/dashboard/${auth?.user?.role === 1? "admin/profile" : "user/profile"}`} className="nav-link"> Dashboard </NavLink>
                                 </li>
                                 <li className="nav-item">
                                     <button onClick={handleClick} className="nav-link"> Logout</button>

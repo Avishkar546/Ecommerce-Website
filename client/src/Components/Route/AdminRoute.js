@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
 import { Outlet } from "react-router-dom";
 import Spinner from "../Spinner";
+import { toast } from "react-toastify";
 
 export const AdminRoute = () => {
     const [auth] = useAuth();
@@ -15,17 +16,17 @@ export const AdminRoute = () => {
                     "Authorization": auth?.token
                 }
             })
-            // console.log(res.data);
             if (res.data.success) {
                 setOk(true);
             } else {
+                toast("You are not a Admin")
                 setOk(false);
             }
         }
         if (auth?.token) authCheck();
     }, [auth?.token])
 
-    return ok ? <Outlet /> : <Spinner />;
+    return ok ? <Outlet /> : <Spinner path="" />;
 
 }
 

@@ -33,7 +33,7 @@ const Login = () => {
 
                 navigate("/");
             } else {
-                toast.error(response.data.message);
+                toast.error({message:response.data.message, timeout: 2000});
                 setCredentials({
                     password: ""
                 })

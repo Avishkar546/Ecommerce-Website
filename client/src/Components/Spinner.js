@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-const Spinner = () => {
+const Spinner = ({path, message}) => {
     const [count, setCount] = useState({
-        count: 5
+        count: 3
     });
     const Navigate = useNavigate();
 
@@ -13,7 +14,7 @@ const Spinner = () => {
                 count: count.count - 1
             })
 
-            count.count === 0 && Navigate("/login");
+            count.count === 0 && Navigate(`/${path}`);
             return clearInterval(interval);
         },1000)
     }, [count, Navigate])

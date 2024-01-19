@@ -1,4 +1,4 @@
-import Jwt from "jsonwebtoken";
+import Jwt, { decode } from "jsonwebtoken";
 import User from "../models/userModel.js";
 
 // Check valid user
@@ -29,7 +29,7 @@ export const isAdmin = async (req, res, next) => {
     try {
         const user = await User.findById(req.user._id);
         if (user.role !== 1) {
-            return res.status(401).json({ message: "Unauthorized access to Admin portal" });
+            return res.status(200).json({success:false, message: "Unauthorized access to Admin portal" });
         }
         else {
             next();
