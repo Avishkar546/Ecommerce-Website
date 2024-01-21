@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import connectDB from "./Config/db.js";
 import router from "./Routes/Auth.js";
+import Categoryrouter from "./Routes/Category.js";
 import cors from "cors";
 
 //rest object
@@ -27,6 +28,8 @@ app.get("/", (req, res) => {
 
 // Use the authentication route
 app.use('/api/v1/auth', router);
+// Use CRUD category route
+app.use('/api/v1/category', Categoryrouter);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, (req, res) => {
