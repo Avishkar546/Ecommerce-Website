@@ -15,7 +15,7 @@ export const fetchUser = (req, res, next) => {
 
         // Attach the user object to the request for further use in the route handler
         req.user = decoded.user;
-
+        console.log("In fetchuer");
         // Proceed to the next middleware or route handler
         next();
     } catch (error) {
@@ -32,6 +32,7 @@ export const isAdmin = async (req, res, next) => {
             return res.status(200).json({success:false, message: "Unauthorized access to Admin portal" });
         }
         else {
+            console.log("In isAdmin");
             next();
         }
     } catch (error) {

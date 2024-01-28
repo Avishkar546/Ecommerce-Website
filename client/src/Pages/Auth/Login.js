@@ -21,7 +21,7 @@ const Login = () => {
                 email: credentials.email, password: credentials.password
             })
             console.log(response);
-            if (response.data.success) {
+            if (response.data.success === true) {
                 toast.success(response.data.message);
                 setAuth({
                     ...auth,
@@ -33,13 +33,14 @@ const Login = () => {
 
                 navigate("/");
             } else {
-                toast.error({message:response.data.message, timeout: 2000});
+                console.log("In else");
+                toast({message:response.data.message, timeout: 2000});
                 setCredentials({
                     password: ""
                 })
             }
         } catch (error) {
-            toast.success("Something went wrong");
+            toast.error("Something went wrong");
             console.log(error);
         }
     }

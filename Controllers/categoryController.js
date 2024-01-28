@@ -19,10 +19,17 @@ export const CreateCategory = async (req, res) => {
     return res.send({ success: true, message: "Category created succesfully" });
 }
 
-// Read
+// Read - All Categories
 export const getCategoriesController = async (req, res) => {
     const categories = await CategoryModel.find();
     return res.send(categories);
+}
+
+// Get Single category
+export const singleCategory = async(req, res) => {
+    const category = await CategoryModel.findOne({slug:req.params.slug});
+    return res.status(200).send({success:true, category});
+    
 }
 
 // Update

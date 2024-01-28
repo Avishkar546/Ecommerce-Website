@@ -80,7 +80,7 @@ export const loginController = async (req, res) => {
             return res.send({ success: false, message: "Invalid credentials" });
         }
 
-        console.log('Login succesfully');
+        // console.log('Login succesfully');
         // Create the JSON web token for valid logged in user.
         const payload = {
             user: {
@@ -94,7 +94,7 @@ export const loginController = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        return res.status(400).send({ success: true, message: "Something went wrong", error });
+        return res.status(501).send({ success: true, message: "Internal Server error", error });
     }
 }
 
