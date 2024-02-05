@@ -16,8 +16,8 @@ const AuthProvider = ({ children }) => {
                 user: parsedData.user,
                 token: parsedData.jwtToken
             });
-        }
-    }, [])
+        } 
+    }, []) 
     return (
         <AuthContext.Provider value={[auth, setAuth]} >
             {children}

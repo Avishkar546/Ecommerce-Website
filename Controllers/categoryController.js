@@ -16,12 +16,12 @@ export const CreateCategory = async (req, res) => {
 
     const category = new CategoryModel({ name, slug: slugify(name) }).save();
 
-    return res.send({ success: true, message: "Category created succesfully" });
+    return res.send({ success: true, message: `${name} created succesfully`});
 }
 
 // Read - All Categories
 export const getCategoriesController = async (req, res) => {
-    const categories = await CategoryModel.find();
+    const categories = await CategoryModel.find({});
     return res.send(categories);
 }
 
@@ -49,7 +49,11 @@ export const modifyCategoryController = async (req, res) => {
         }
 
         const updatedCategory = await CategoryModel.findByIdAndUpdate({ _id: category._id }, { name, slug: slugify(name) }, { new: true });
-        return res.send({ success: true, updatedCategory });
+        return res.send({ 
+            success: true,
+            message:"Category updated succesfully",
+            updatedCategory 
+        });
     } catch (error) {
         console.log(error);
         return res.status(500).send({ success: false, message: "Some Internal error" });
@@ -68,7 +72,12 @@ export const deleteCategoryController = async (req, res) => {
         }
 
         const updatedCategory = await CategoryModel.findByIdAndDelete({ _id: category._id }, { new: true });
-        return res.send({ success: true, updatedCategory });
+        
+        return res.send({ 
+            success: true,
+            message:"Category deleted succesfully",
+             updatedCategory 
+        });
     } catch (error) {
         console.log(error);
         return res.status(500).send({ success: false, message: "Some Internal error" });

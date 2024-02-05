@@ -6,7 +6,7 @@ import { CreateCategory, modifyCategoryController, getCategoriesController, dele
 const Categoryrouter = Express.Router();
 
 // CRUD operation APIs
-Categoryrouter.post("/create-category", fetchUser, isAdmin, CreateCategory);
+Categoryrouter.post("/create-category",fetchUser, isAdmin, CreateCategory);
 Categoryrouter.get("/get-all-categories", getCategoriesController);
 Categoryrouter.get("/single-category/:slug", singleCategory);
 Categoryrouter.put("/update-category/:id", fetchUser, isAdmin, modifyCategoryController);

@@ -11,6 +11,7 @@ const router = express.Router();
 // 3. Get Single product
 // 4. Get product image
 // 5. Delete product
+// 5. Update product
 router.post('/create-product', fetchUser, isAdmin, formidable(), createProductController);
 router.get("/get-all-products", getAllProductsController);
 router.get("/get-product/:slug", getSingleProductController);
