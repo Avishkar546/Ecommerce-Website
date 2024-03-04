@@ -1,85 +1,131 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Poppins:wght@300;400&family=Roboto+Condensed&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Poppins:wght@300;400&family=Roboto+Condensed&display=swap");
 
 /* font-family: 'Poppins', sans-serif;
 /* font-family: 'Playfair Display', serif; */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* Navbar Styling */
 .navbar {
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    line-height: 12px;
-    ;
-    text-transform: uppercase;
-    box-shadow: 0 8px 6px -6px grey;
-    --webkit-box-shadow: 0 8px 6px -6px grey;
-    border-bottom: solid grey !important;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  line-height: 12px;
+  text-transform: uppercase;
+  box-shadow: 0 8px 6px -6px grey;
+  --webkit-box-shadow: 0 8px 6px -6px grey;
+  border-bottom: solid grey !important;
 }
 
 .navbar {
-    font-weight: 400 !important;
+  font-weight: 400 !important;
 }
 
 .active {
-    border-bottom: 2px solid #0b0b0a;
+  border-bottom: 2px solid #0b0b0a;
 }
 
 .navbar-brand {
-    font-weight: 700;
-    font-family: "roboto", sans-serif;
-    letter-spacing: 2px;
+  font-weight: 700;
+  font-family: "roboto", sans-serif;
+  letter-spacing: 2px;
 }
 
 /* Footer Styling */
 .footer {
-    color: white;
-    background-image: linear-gradient(to right, #051937, #171228, #190a1a, #0F1111, #000000);
+  color: white;
+  background-image: linear-gradient(
+    to right,
+    #051937,
+    #171228,
+    #190a1a,
+    #0f1111,
+    #000000
+  );
 }
-
 
 /* Page Not Found */
 .pnf {
-    display: flex;
-    min-height: 65vh;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  min-height: 65vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .pnf-title {
-    font-size: 100px;
-    font-weight: 700;
+  font-size: 100px;
+  font-weight: 700;
 }
 
 .pnf-heading {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 .pnf-btn {
-    color: black;
-    border: 1px solid black;
-    text-decoration: none;
-    padding: 10px;
-    margin-top: 10px;
+  color: black;
+  border: 1px solid black;
+  text-decoration: none;
+  padding: 10px;
+  margin-top: 10px;
 }
 
 /* Register page Styling */
 .register {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-    text-align: center;
-    flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  text-align: center;
+  flex-direction: column;
 }
 
 .register form {
-    /* border: 1px solid black; */
-    box-shadow: 5px 5px 8px 2px rgba(0, 0, 0, 0.3);
-    padding: 2px;
+  /* border: 1px solid black; */
+  box-shadow: 5px 5px 8px 2px rgba(0, 0, 0, 0.3);
+  padding: 2px;
+}
+
+/* Product display styling */
+.product-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.product-card {
+  width: calc(33.33% - 20px); /* Three cards in one row */
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.product-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.product-details {
+  padding: 10px;
+}
+
+.product-name {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.product-description {
+  margin-bottom: 10px;
+}
+
+.product-price {
+  font-weight: bold;
+}
+
+.btn-primary {
+  margin-top: auto;
 }

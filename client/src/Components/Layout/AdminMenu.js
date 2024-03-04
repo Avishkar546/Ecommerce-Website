@@ -9,6 +9,7 @@ const AdminMenu = () => {
                 <NavLink to="/dashboard/admin/profile" className="list-group-item list-group-item-action">Admin Profile</NavLink>
                 <NavLink to="/dashboard/admin/create-category" className="list-group-item list-group-item-action">Create Category</NavLink>
                 <NavLink to="/dashboard/admin/create-product" className="list-group-item list-group-item-action">Create Product</NavLink>
+                <NavLink to="/dashboard/admin/all-products" className="list-group-item list-group-item-action">Products</NavLink>
                 <NavLink to="/dashboard/admin/total-orders" className="list-group-item list-group-item-action">Total Orders</NavLink>
                 <NavLink to="/dashboard/admin/total-revenue" className="list-group-item list-group-item-action">Total Revenue</NavLink>
             </div>

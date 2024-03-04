@@ -16,7 +16,7 @@ export const CreateCategory = async (req, res) => {
 
     const category = new CategoryModel({ name, slug: slugify(name) }).save();
 
-    return res.send({ success: true, message: `${name} created succesfully`});
+    return res.send({ success: true, category: `${name}`, message: `${name} created succesfully` });
 }
 
 // Read - All Categories
@@ -26,10 +26,10 @@ export const getCategoriesController = async (req, res) => {
 }
 
 // Get Single category
-export const singleCategory = async(req, res) => {
-    const category = await CategoryModel.findOne({slug:req.params.slug});
-    return res.status(200).send({success:true, category});
-    
+export const singleCategory = async (req, res) => {
+    const category = await CategoryModel.findOne({ slug: req.params.slug });
+    return res.status(200).send({ success: true, category });
+
 }
 
 // Update
@@ -49,10 +49,10 @@ export const modifyCategoryController = async (req, res) => {
         }
 
         const updatedCategory = await CategoryModel.findByIdAndUpdate({ _id: category._id }, { name, slug: slugify(name) }, { new: true });
-        return res.send({ 
+        return res.send({
             success: true,
-            message:"Category updated succesfully",
-            updatedCategory 
+            message: "Category updated succesfully",
+            updatedCategory
         });
     } catch (error) {
         console.log(error);
@@ -72,11 +72,11 @@ export const deleteCategoryController = async (req, res) => {
         }
 
         const updatedCategory = await CategoryModel.findByIdAndDelete({ _id: category._id }, { new: true });
-        
-        return res.send({ 
+
+        return res.send({
             success: true,
-            message:"Category deleted succesfully",
-             updatedCategory 
+            message: "Category deleted succesfully",
+            updatedCategory
         });
     } catch (error) {
         console.log(error);

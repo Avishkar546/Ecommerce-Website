@@ -3,10 +3,21 @@ import AdminMenu from '../../Components/Layout/AdminMenu'
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Select } from 'antd';
-// import 'antd/dist/antd.css';
+import { useAuth } from '../../Context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const CreateProduct = () => {
+  // To store all the categories, so that dropdown display it.
   const [categories, setCategories] = useState([]);
+
+  // Need to get the id from search category
+  const [searchCategory, setSearchCategory] = useState("");
+
+  // Get logged in user token
+  const [auth] = useAuth();
+
+  // Navigate to other page
+  const navigate = useNavigate();
 
   const [product, setProduct] = useState({
     name: "",
@@ -37,8 +48,60 @@ const CreateProduct = () => {
     return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
   };
 
-  const style = {
-    border: 'none'
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    const newValue = type === 'checkbox' ? checked : value;
+    setProduct((prevProduct) => ({ ...prevProduct, [name]: newValue }));
+  }
+
+
+  const handleCreateProduct = async (e) => {
+    // console.log("Into handleCreateProduct");
+
+    e.preventDefault();
+    try {
+      const token = auth.token;
+      const formData = new FormData();
+
+      formData.append('name', product.name);
+      formData.append('description', product.description);
+      formData.append('price', product.price);
+      formData.append('quantity', product.quantity);
+      formData.append('photo', product.photo);
+      formData.append('category', searchCategory);
+      formData.append('shipping', product.shipping);
+
+      // formData.forEach((val, key) => {
+      //   console.log(`${key} : ${val}`);
+      // })
+
+      const { data } = await axios.post("http://localhost:8080/api/v1/product/create-product", formData, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data; boundary=--------------------------boundary',
+        }
+      },
+      )
+
+      console.log(data);
+      if (data?.success) {
+        toast.success("product created succesfully");
+        setProduct({
+          name: "",
+          description: "",
+          price: "",
+          quantity: "",
+          shipping: "",
+          photo: ""
+        })
+        navigate('/dashboard/admin/all-products');
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
   }
 
   return (
@@ -50,11 +113,56 @@ const CreateProduct = () => {
         <div className="col-md-9">
           <h1> Manage Product </h1>
           <div className="m-1 w-75">
-            <Select style={{ border: '2px solid black', borderRadius: '2px' }} placeholder="Search a category" size='large' showSearch className='form-select mb-3 p-2' onChange={(value) => setSearchCategory(value)}
+            <Select
+              placeholder="Search a category"
+              size='100'
+              showSearch
+              className='form-select col-md-12'
+              style={{ border: '1px solid black', borderRadius: '4px' }} // Adjust border style here
+              onChange={(value) => setSearchCategory(value)}
               options={categories?.map((category) => ({ value: category._id, label: category.name }))}
               filterOption={filterOption}
+              variant="borderless"
             >
             </Select>
+
+            <div className="mt-3 mb-3">
+              <label className='btn btn-outline-secondary col-md-12'>
+                {product.photo ? product.photo.name : "Upload image"}
+                <input type="file" name="photo" accept='image/*' onChange={(e) => setProduct({ ...product, photo: e.target.files[0] })} hidden />
+              </label>
+            </div>
+
+            <div className="mt-10">
+              {product.photo && (
+                <div className="text-center">
+                  <img src={URL.createObjectURL(product.photo)} alt='' height={'200px'} className='img img-responsive' />
+                </div>
+              )}
+            </div>
+
+            <div className="mt-3">
+              <input type="text" className="form-control" name="name" value={product.name} placeholder="Enter product name" onChange={handleChange} required />
+            </div>
+            <div className="mt-3">
+              <textarea className="form-control" name="description" value={product.description} placeholder="Enter product description" onChange={handleChange} />
+            </div>
+            <div className="mt-3">
+              <input type="number" className="form-control" name="price" value={product.price} placeholder="Enter product price" onChange={handleChange} required />
+            </div>
+            <div className="mt-3">
+              <input type="number" className="form-control" name="quantity" value={product.quantity} placeholder="Enter product quantity" border={'1px solid black'} onChange={handleChange} required />
+            </div>
+            <div className="mt-3 form-check">
+              <input type="checkbox" className="form-check-input" name="shipping" checked={product.shipping} onChange={handleChange}
+              />
+              <label className="form-check-label ms-2">
+                Want Delivery
+              </label>
+            </div>
+            <div className="mt-3">
+              <button type='submit' onClick={handleCreateProduct} className="btn btn-outline-success" >Create Product</button>
+            </div>
           </div>
         </div>
       </div>

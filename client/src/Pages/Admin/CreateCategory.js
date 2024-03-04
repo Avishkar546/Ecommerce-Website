@@ -28,7 +28,7 @@ const CreateCategory = () => {
   }, []) // Dependency array kept blank if we need to run the present code only once when page is rendered
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     try {
       const token = auth.token;
       const { data } = await axios.post("http://localhost:8080/api/v1/category/create-category", { name: category.name }, {
@@ -37,12 +37,12 @@ const CreateCategory = () => {
           'Authorization': `Bearer ${token}`,
         },
       });
-      console.log("After request");
+      console.log(data);
       if (data?.success) {
+        setCategories([...categories, data.category]);
         setCategory({
           name: ""
         })
-        await getAllCategories();
         toast.success(data.message);
       } else {
         toast.warning(data.message);
@@ -94,7 +94,7 @@ const CreateCategory = () => {
     console.log(categoryId);
     setSelectedCategoryId(categoryId);
     setCategory({
-      name:name
+      name: name
     })
     setShowModal(true);
   };
