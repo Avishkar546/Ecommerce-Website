@@ -118,6 +118,20 @@
   margin-bottom: 5px;
 }
 
+.product-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-actions > * {
+  margin-right: 8px; /* Adjust the spacing between icons */
+}
+
+.product-actions > *:last-child {
+  margin-right: 0; /* Remove margin from the last icon */
+}
+
 .product-description {
   margin-bottom: 10px;
 }

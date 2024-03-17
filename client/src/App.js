@@ -18,6 +18,7 @@ import AllProduct from "./Pages/Admin/All-Product";
 import TotalOrders from './Pages/Admin/TotalOrders';
 import TotalRevenue from "./Pages/Admin/TotalRevenue";
 import Orders from "./Pages/User/Orders";
+
 const App = () => {
   return (
 

@@ -56,8 +56,7 @@ const CreateProduct = () => {
 
 
   const handleCreateProduct = async (e) => {
-    // console.log("Into handleCreateProduct");
-
+    
     e.preventDefault();
     try {
       const token = auth.token;
@@ -80,12 +79,10 @@ const CreateProduct = () => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'multipart/form-data; boundary=--------------------------boundary',
         }
-      },
-      )
-
-      console.log(data);
+      })
+      
       if (data?.success) {
-        toast.success("product created succesfully");
+        toast.success(data.message);
         setProduct({
           name: "",
           description: "",
@@ -100,7 +97,7 @@ const CreateProduct = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong");
+      toast.error("Internal server error");
     }
   }
 

@@ -8,24 +8,24 @@ export const createProductController = async (req, res) => {
     const { name, description, price, quantity, shipping, category } = req.fields;
     const { photo } = req.files;
 
-    console.log(name, description, price, quantity, shipping, category);
+    // console.log(name, description, price, quantity, shipping, category);
 
     // Input data sanitization 
-    switch(true){
+    switch (true) {
       case name:
-        return res.status(400).send({success:false, message:"Name is required"})
+        return res.status(400).send({ success: false, message: "Name is required" })
       case description:
-        return res.status(400).send({success:false, message:"description is required"})
+        return res.status(400).send({ success: false, message: "description is required" })
       case price:
-        return res.status(400).send({success:false, message:"price is required"})
+        return res.status(400).send({ success: false, message: "price is required" })
       case quantity:
-        return res.status(400).send({success:false, message:"quantity is required"})
+        return res.status(400).send({ success: false, message: "quantity is required" })
       case shipping:
-        return res.status(400).send({success:false, message:"shipping is required"})
+        return res.status(400).send({ success: false, message: "shipping is required" })
       case category:
-        return res.status(400).send({success:false, message:"category is required"})
+        return res.status(400).send({ success: false, message: "category is required" })
       case photo && photo.size > 1000000:
-        return res.status(400).send({success:false, message:"photo is required and should be less than 1MB"})
+        return res.status(400).send({ success: false, message: "photo is required and should be less than 1MB" })
     }
 
     const newProduct = new ProductModel({
@@ -42,7 +42,7 @@ export const createProductController = async (req, res) => {
     const imageData = fs.readFileSync(photo.path);
     if (photo) {
       newProduct.photo.data = imageData, // Set image data
-      newProduct.photo.contentType = photo.type // Set image content type
+        newProduct.photo.contentType = photo.type // Set image content type
     }
 
     // Create new product instance
@@ -154,4 +154,31 @@ export const updateProductController = async (req, res) => {
       error
     })
   }
+}
+
+// Filter product 
+export const filterProductController = async (req, res) => {
+  try {
+    const { checked, radio } = req.body;
+    if(checked.length)console.log(checked);
+    if(radio.length) console.log(radio);
+    let args = {};
+    if (checked.length > 0) args.category = checked;
+    if (radio.length) args.price = { $lte: radio[1], $gte: radio[0] };
+
+    const products = await ProductModel.find(args);
+
+    res.status(200).send({
+      success: true,
+      products
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error while filtering",
+      error
+    })
+  }
+
 }

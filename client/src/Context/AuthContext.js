@@ -25,5 +25,6 @@ const AuthProvider = ({ children }) => {
     )
 }
 
+// This is custom hooks which are basically react component (Function) helps to provide DRY property.
 const useAuth = () => useContext(AuthContext);
 export { useAuth, AuthProvider };
