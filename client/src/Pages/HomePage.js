@@ -12,14 +12,28 @@ const HomePage = ({ title, description }) => {
   const [products, setProduct] = useState([]);
   const [checked, setChecked] = useState([]);
   const [radio, setRadio] = useState("");
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(0);
 
   const getAllCategories = async () => {
     const { data } = await axios.get("http://localhost:8080/api/v1/category/get-all-categories");
     setCategories(data);
   }
 
+  const getTotal = async () => {
+    const { data } = await axios.get("http://localhost:8080/api/v1/product/product-count");
+    setTotal(data?.total);
+  }
+
+  const loadMore = async () => {
+    setPage(page + 1);
+    console.log(page);
+    const { data } = await axios.get(`http://localhost:8080/api/v1/product/product-list/${page}`);
+    setProduct([...products, data?.products]);
+  }
+
   const getAllProduct = async () => {
-    const { data } = await axios.get("http://localhost:8080/api/v1/product/get-all-products", {
+    const { data } = await axios.get(`http://localhost:8080/api/v1/product/product-list/${page}`, {
     })
 
     if (data?.success) {
@@ -39,13 +53,15 @@ const HomePage = ({ title, description }) => {
   }
 
   useEffect(() => {
-    if (!checked.length || !radio.length) getAllProduct();
+    if (!checked.length || !radio) getAllProduct();
   }, [checked.length, radio.length])
 
   useEffect(() => {
     getAllCategories();
+    getTotal();
   }, [])
 
+  // When user searching products through filter.
   useEffect(() => {
     if (checked.length || radio.length) filterProduct();
   }, [checked.length, radio])
@@ -97,29 +113,37 @@ const HomePage = ({ title, description }) => {
               </Space>
             </Radio.Group>
           </div>
+          <button className="mt-5 btn btn-danger" onClick={() => {
+            window.location.reload();
+          }}>
+            RESET FILTERS
+          </button>
         </div>
 
         <div className="col-md-9">
           <h3 className="text-center"> All Product List </h3>
           <div className="product-container">
-          {products.length? 
+            {products.length ?
               products.map((product) => (
-              <div key={product._id} className="product-card">
-                <img src={`http://localhost:8080/api/v1/product/product-photo/${product._id}`} alt={product.name} className="product-img" />
-                <div className="product-details">
-                  <h5 className="product-name">{product.name}</h5>
-                  <p className="product-description">{product.description.substr(0,50)}</p>
-                  <p className="product-price">${product.price}</p>
-                  <Link to={`/products/${product.slug}`} className="btn btn-primary ms-2">View Details</Link>
-                  <Link to={`/products/${product.slug}`} className="btn btn-secondary ms-2">ADD TO CART</Link>
+                <div key={product._id} className="product-card">
+                  <img src={`http://localhost:8080/api/v1/product/product-photo/${product._id}`} alt={product.name} className="product-img" />
+                  <div className="product-details">
+                    <h5 className="product-name">{product.name}</h5>
+                    <p className="product-description">{product.description.substr(0, 50)}</p>
+                    <p className="product-price">${product.price}</p>
+                    <Link to={`/products/${product.slug}`} className="btn btn-primary ms-2">View Details</Link>
+                    <Link to={`/products/${product.slug}`} className="btn btn-secondary ms-2">ADD TO CART</Link>
+                  </div>
                 </div>
-              </div>
-            )) : 
+              )) :
               <h3>No products to display</h3>
             }
-            
           </div>
-
+          <div className="pagination">
+            {products && products.length > total && (
+              <button type="button" className="btn btn-warning" onClick={loadMore}>Loadmore</button>
+            )}
+          </div>
         </div>
       </div>
     </div>
