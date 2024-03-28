@@ -10,14 +10,15 @@ import Categoryrouter from "./Routes/Category.js";
 import productRouter from "./Routes/Product.js"
 import cors from "cors";
 
-//rest object
-const app = express();
-
 // configure dotenv File. .env is in root directory therefore no need to add path option.
-dotenv.config(); // 
+dotenv.config(); 
 
 // Connection to mongoDB database
 connectDB();
+
+//rest object
+const app = express();
+
 
 app.use(express.json({ limit: '50mb' }));
 // app.use(express.urlencoded({ extended:false, limit: '50mb' }));

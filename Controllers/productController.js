@@ -24,7 +24,7 @@ export const createProductController = async (req, res) => {
         return res.status(400).send({ success: false, message: "shipping is required" })
       case category:
         return res.status(400).send({ success: false, message: "category is required" })
-      case photo && photo.size > 1000000:
+      case photo && photo.size > 2000000:
         return res.status(400).send({ success: false, message: "photo is required and should be less than 1MB" })
     }
 
@@ -69,7 +69,7 @@ export const createProductController = async (req, res) => {
 // GET all products
 export const getAllProductsController = async (req, res) => {
   try {
-    const products = await ProductModel.find({}).select("-photo").populate("category").limit(12).sort({ createdAt: -1 });
+    const products = await ProductModel.find({}).select("-photo").populate("category").limit(3).sort({ createdAt: -1 });
     return res.send({
       success: true,
       Total: products.length,
@@ -160,8 +160,8 @@ export const updateProductController = async (req, res) => {
 export const filterProductController = async (req, res) => {
   try {
     const { checked, radio } = req.body;
-    if(checked.length)console.log(checked);
-    if(radio.length) console.log(radio);
+    if (checked.length) console.log(checked);
+    if (radio.length) console.log(radio);
     let args = {};
     if (checked.length > 0) args.category = checked;
     if (radio.length) args.price = { $lte: radio[1], $gte: radio[0] };
@@ -181,4 +181,50 @@ export const filterProductController = async (req, res) => {
     })
   }
 
+}
+
+// Count total no. products
+export const productCountController = async (req, res) => {
+  try {
+    const total = await ProductModel.find({}).estimatedDocumentCount();
+
+    res.send({
+      message: `Total Count ${total}`,
+      total
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error while counting",
+      error
+    })
+  }
+}
+
+// Return per page products
+export const productListController = async (req, res) => {
+  try {
+    const perPage = 2;
+    const page = parseInt(req.params.page);
+    console.log(page);
+
+    const products = await ProductModel.find({})
+      .select("-photo")
+      .skip((page - 1) * perPage)
+      .limit(perPage)  // 0 argument means no limit
+      .sort({ createdAt: -1 });
+
+    res.send({
+      message: `products for page ${page}`,
+      success:true,
+      products
+    })
+  } catch (error) {
+    console.log(error);
+    res.send({
+      message: "Error while fetching",
+      error
+    })
+  }
 }

@@ -13,7 +13,7 @@ const HomePage = ({ title, description }) => {
   const [checked, setChecked] = useState([]);
   const [radio, setRadio] = useState("");
   const [total, setTotal] = useState(0);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
 
   const getAllCategories = async () => {
     const { data } = await axios.get("http://localhost:8080/api/v1/category/get-all-categories");
@@ -26,20 +26,31 @@ const HomePage = ({ title, description }) => {
   }
 
   const loadMore = async () => {
-    setPage(page + 1);
     console.log(page);
     const { data } = await axios.get(`http://localhost:8080/api/v1/product/product-list/${page}`);
-    setProduct([...products, data?.products]);
+    console.log(data);
+    if (data?.success) {
+      setProduct(prevProducts => [...prevProducts, ...data.products]);
+    }
   }
 
+  useEffect(() => {
+    if (page === 1) return;
+    loadMore();
+  }, [page])
+
   const getAllProduct = async () => {
-    const { data } = await axios.get(`http://localhost:8080/api/v1/product/product-list/${page}`, {
+    const { data } = await axios.get(`http://localhost:8080/api/v1/product/get-all-products`, {
     })
 
     if (data?.success) {
       setProduct(data.products);
     }
   }
+
+  // useEffect(() => {
+  //   if (checked.length === 0 && !radio) getAllProduct();
+  // }, [])
 
   const handleFilter = (value, id) => {
     let all = [...checked];
@@ -52,19 +63,13 @@ const HomePage = ({ title, description }) => {
     setChecked(all);
   }
 
-  useEffect(() => {
-    if (!checked.length || !radio) getAllProduct();
-  }, [checked.length, radio.length])
 
   useEffect(() => {
     getAllCategories();
     getTotal();
+    getAllProduct();
   }, [])
 
-  // When user searching products through filter.
-  useEffect(() => {
-    if (checked.length || radio.length) filterProduct();
-  }, [checked.length, radio])
 
   // Function to filter products
   const filterProduct = async () => {
@@ -81,6 +86,11 @@ const HomePage = ({ title, description }) => {
 
   }
 
+  // When user searching products through filter.
+  useEffect(() => {
+    if (checked.length || radio) filterProduct();
+  }, [checked.length, radio])
+
   return (
 
     <div>
@@ -91,11 +101,11 @@ const HomePage = ({ title, description }) => {
         <meta name="keyword" content='Shopping, Ecommerce, Product, Purchase, Shopify, Buying, Mobiles, Shirt, Electronics, Clothes, Pants, T-Shirt'></meta>
       </ Helmet>
       <div className="row m-3">
-
+        <p>{total}</p>
         <div className="col-md-3">
           <h5>filter By Categories</h5>
           <div className="d-flex flex-column">
-            {categories.map((category) => (
+            {categories.map((category, index) => (
               <Checkbox onChange={(e) => handleFilter(e.target.checked, category._id)}>{category.name}</Checkbox>
             ))}
           </div>
@@ -140,8 +150,12 @@ const HomePage = ({ title, description }) => {
             }
           </div>
           <div className="pagination">
-            {products && products.length > total && (
-              <button type="button" className="btn btn-warning" onClick={loadMore}>Loadmore</button>
+            {products && total > products.length && (
+              <button type="button" className="btn btn-warning" onClick={
+                (e) => {
+                  e.preventDefault();
+                  setPage(prevPage => prevPage + 1);
+                }}>Loadmore</button>
             )}
           </div>
         </div>
