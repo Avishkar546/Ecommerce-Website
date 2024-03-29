@@ -3,6 +3,7 @@ import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { GiShoppingBag } from "react-icons/gi";
 import { useAuth } from '../../Context/AuthContext';
 import { toast } from 'react-toastify';
+import Search from './../Form/Search';
 
 const Navbar = () => {
     const [auth, setAuth] = useAuth();
@@ -28,6 +29,7 @@ const Navbar = () => {
                     <Link to="/" className="navbar-brand"><GiShoppingBag /> Ecommerce App</Link>
                     {/* Navbar right side */}
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <Search />
                         <li className="nav-item">
                             <NavLink to="/" className="nav-link" aria-current="page">Home</NavLink>
                         </li>
@@ -58,7 +60,7 @@ const Navbar = () => {
                             // </li>)
                             <>
                                 <li className="nav-item">
-                                    <NavLink to={`/dashboard/${auth?.user?.role === 1? "admin/profile" : "user/profile"}`} className="nav-link"> Dashboard </NavLink>
+                                    <NavLink to={`/dashboard/${auth?.user?.role === 1 ? "admin/profile" : "user/profile"}`} className="nav-link"> Dashboard </NavLink>
                                 </li>
                                 <li className="nav-item">
                                     <button onClick={handleClick} className="nav-link"> Logout</button>

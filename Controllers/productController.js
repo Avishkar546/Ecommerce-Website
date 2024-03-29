@@ -205,9 +205,8 @@ export const productCountController = async (req, res) => {
 // Return per page products
 export const productListController = async (req, res) => {
   try {
-    const perPage = 2;
+    const perPage = 3;
     const page = parseInt(req.params.page);
-    console.log(page);
 
     const products = await ProductModel.find({})
       .select("-photo")
@@ -217,13 +216,40 @@ export const productListController = async (req, res) => {
 
     res.send({
       message: `products for page ${page}`,
-      success:true,
+      success: true,
       products
     })
   } catch (error) {
     console.log(error);
     res.send({
       message: "Error while fetching",
+      error
+    })
+  }
+}
+
+// search product based on keywords
+export const serachProducts = async (req, res) => {
+  try {
+    const { keywords } = req.params;
+
+    const result = await ProductModel.find({
+      $or: [
+        { name: { $regex: keywords, $options: 'i' } },
+        { description: { $regex: keywords, $options: 'i' } },
+      ]
+    });
+
+    res.send({
+      success: true,
+      message: "Products fetched",
+      result
+    })
+  } catch (error) {
+    console.log(error);
+    res.send({
+      success: false,
+      message: "Internal server error",
       error
     })
   }

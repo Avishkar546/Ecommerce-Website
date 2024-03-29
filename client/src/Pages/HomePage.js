@@ -26,9 +26,7 @@ const HomePage = ({ title, description }) => {
   }
 
   const loadMore = async () => {
-    console.log(page);
     const { data } = await axios.get(`http://localhost:8080/api/v1/product/product-list/${page}`);
-    console.log(data);
     if (data?.success) {
       setProduct(prevProducts => [...prevProducts, ...data.products]);
     }
@@ -74,7 +72,7 @@ const HomePage = ({ title, description }) => {
   // Function to filter products
   const filterProduct = async () => {
     try {
-      console.log(`category : ${checked}, Price : ${radio}`);
+      // console.log(`category : ${checked}, Price : ${radio}`);
       const { data } = await axios.post("http://localhost:8080/api/v1/product/filter-product", { checked, radio });
       if (data) {
         setProduct(data.products);
@@ -150,7 +148,7 @@ const HomePage = ({ title, description }) => {
             }
           </div>
           <div className="pagination">
-            {products && total > products.length && (
+            {products.length !== 0 && total > products.length && (
               <button type="button" className="btn btn-warning" onClick={
                 (e) => {
                   e.preventDefault();

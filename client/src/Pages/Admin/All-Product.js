@@ -7,8 +7,15 @@ import { Link } from "react-router-dom";
 
 const AllProduct = () => {
     const [products, setProduct] = useState([]);
+    const [total, setTotal] = useState(0);
+    const [page, setPage] = useState(1);
 
     const [auth] = useAuth();
+
+    const getTotal = async () => {
+        const { data } = await axios.get("http://localhost:8080/api/v1/product/product-count");
+        setTotal(data?.total);
+    }
 
     const getAllProduct = async () => {
         const token = auth.token;
@@ -21,8 +28,23 @@ const AllProduct = () => {
     }
 
     useEffect(() => {
-        getAllProduct()
+        getAllProduct();
+        getTotal();
     }, [])
+
+    const loadMore = async () => {
+        console.log(page);
+        const { data } = await axios.get(`http://localhost:8080/api/v1/product/product-list/${page}`);
+        console.log(data);
+        if (data?.success) {
+            setProduct(prevProducts => [...prevProducts, ...data.products]);
+        }
+    }
+
+    useEffect(() => {
+        if (page === 1) return;
+        loadMore();
+    }, [page])
 
     const handleEditProduct = (productId) => {
 
@@ -58,7 +80,7 @@ const AllProduct = () => {
                 <div className="col-md-9">
                     <h1 className="text-center"> All Product List </h1>
                     <div className="product-container">
-                        {products.length>0? products.map((product) => (
+                        {products.length > 0 ? products.map((product) => (
                             <div key={product._id} className="product-card">
                                 <img src={`http://localhost:8080/api/v1/product/product-photo/${product._id}`} alt={product.name} className="product-img" />
                                 <div className="product-details">
@@ -76,7 +98,19 @@ const AllProduct = () => {
                                     </div>
                                 </div>
                             </div>
-                        )): <h2>No products to display</h2>}
+
+                        )) : <h2>No products to display</h2>}
+                    </div>
+
+                    <div className="pagination">
+                        {products.length !== 0 && total > products.length && (
+                            <button type="button" className="btn btn-warning" onClick={
+                                (e) => {
+                                    e.preventDefault();
+                                    setPage(prevPage => prevPage + 1);
+                                }}>Loadmore
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
