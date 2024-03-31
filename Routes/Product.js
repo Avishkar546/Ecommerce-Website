@@ -5,6 +5,7 @@ import { createProductController,
         filterProductController, 
         getAllProductsController, 
         getPhotoController, 
+        getRelatedProducts, 
         getSingleProductController, 
         productCountController, 
         productListController, 
@@ -43,5 +44,8 @@ router.get("/product-list/:page", productListController); // Make sure '/' befor
 
 // 9. Search product based on keywords
 router.get("/search/:keywords", serachProducts);
+
+// 10. Get similar products
+router.get("/related-product/:pid/:cid", getRelatedProducts); // Make sure '/' before route start
 
 export default router;

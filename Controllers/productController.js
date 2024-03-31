@@ -254,3 +254,26 @@ export const serachProducts = async (req, res) => {
     })
   }
 }
+
+// Similiar products
+export const getRelatedProducts = async (req, res) => {
+  try {
+    const { pid, cid } = req.params;
+
+    const products = await ProductModel.find({
+      category: cid,
+      _id: { $ne: pid }
+    }).select("-photo").limit(3).populate("category")
+
+    res.send({
+      success: true,
+      products
+    })
+  } catch (error) {
+    console.log(error);
+    res.send({
+      success: false,
+      error
+    })
+  }
+}
