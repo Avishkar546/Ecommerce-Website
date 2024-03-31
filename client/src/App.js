@@ -18,6 +18,8 @@ import AllProduct from "./Pages/Admin/All-Product";
 import TotalOrders from './Pages/Admin/TotalOrders';
 import TotalRevenue from "./Pages/Admin/TotalRevenue";
 import Orders from "./Pages/User/Orders";
+import SearchProduct from "./Pages/SearchProduct";
+import ProductDetails from "./Pages/ProductDetails";
 
 const App = () => {
   return (
@@ -28,6 +30,8 @@ const App = () => {
           <Routes>
 
             <Route path="/" element={<HomePage title={"Home - Best Offers"} description={"This is description"} />} />
+            <Route path="/Search" element={<SearchProduct title={"Search"} />} />
+            <Route path="/product-details/:slug" element={<ProductDetails />} />
 
             <Route path="/dashboard" element={<PrivateRoute />}>
               <Route path="user/profile" element={<Dashboard />} />

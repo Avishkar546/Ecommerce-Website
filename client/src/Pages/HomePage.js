@@ -99,7 +99,6 @@ const HomePage = ({ title, description }) => {
         <meta name="keyword" content='Shopping, Ecommerce, Product, Purchase, Shopify, Buying, Mobiles, Shirt, Electronics, Clothes, Pants, T-Shirt'></meta>
       </ Helmet>
       <div className="row m-3">
-        <p>{total}</p>
         <div className="col-md-3">
           <h5>filter By Categories</h5>
           <div className="d-flex flex-column">
@@ -113,8 +112,8 @@ const HomePage = ({ title, description }) => {
           <div className="d-flex flex-column">
             <Radio.Group onChange={(e) => setRadio(e.target.value)}>
               <Space direction="vertical">
-                {Prices?.map((p) => (
-                  <div key={p._id}>
+                {Prices?.map((p, index) => (
+                  <div key={index}>
                     <Radio value={p.array}>{p.name}</Radio>
                   </div>
                 ))}
@@ -139,7 +138,7 @@ const HomePage = ({ title, description }) => {
                     <h5 className="product-name">{product.name}</h5>
                     <p className="product-description">{product.description.substr(0, 50)}</p>
                     <p className="product-price">${product.price}</p>
-                    <Link to={`/products/${product.slug}`} className="btn btn-primary ms-2">View Details</Link>
+                    <Link to={`/product-details/${product.slug}`} className="btn btn-primary ms-2">View Details</Link>
                     <Link to={`/products/${product.slug}`} className="btn btn-secondary ms-2">ADD TO CART</Link>
                   </div>
                 </div>
