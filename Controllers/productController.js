@@ -1,6 +1,7 @@
 import ProductModel from '../models/ProductModel.js';
 import fs from 'fs';
 import slugify from 'slugify';
+import CategoryModel from '../models/CategoryModel.js';
 
 // Create a new product
 export const createProductController = async (req, res) => {
@@ -273,6 +274,26 @@ export const getRelatedProducts = async (req, res) => {
     console.log(error);
     res.send({
       success: false,
+      error
+    })
+  }
+}
+
+// Category wise products 
+export const getProductCategorywise = async (req, res) => {
+  try {
+    const category = await CategoryModel.find({ slug: req.params.slug })
+    const products = await ProductModel.find({category}).select("-photo").populate("category");
+
+    res.status(200).send({
+      success: true,
+      products
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Internal server error",
       error
     })
   }

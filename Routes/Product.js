@@ -5,6 +5,7 @@ import { createProductController,
         filterProductController, 
         getAllProductsController, 
         getPhotoController, 
+        getProductCategorywise, 
         getRelatedProducts, 
         getSingleProductController, 
         productCountController, 
@@ -47,5 +48,8 @@ router.get("/search/:keywords", serachProducts);
 
 // 10. Get similar products
 router.get("/related-product/:pid/:cid", getRelatedProducts); // Make sure '/' before route start
+
+// 11. Get products category wise
+router.get("/products-category-wise/:slug", getProductCategorywise);
 
 export default router;

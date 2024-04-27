@@ -20,6 +20,8 @@ import TotalRevenue from "./Pages/Admin/TotalRevenue";
 import Orders from "./Pages/User/Orders";
 import SearchProduct from "./Pages/SearchProduct";
 import ProductDetails from "./Pages/ProductDetails";
+import Categories from './Pages/Categories';
+import CategoryProduct from "./Pages/CategoryProduct";
 
 const App = () => {
   return (
@@ -48,6 +50,8 @@ const App = () => {
               <Route path="admin/total-revenue" element={<TotalRevenue />}></Route>
             </Route>
 
+            <Route path="/categories" element={<Categories />} />
+            <Route path="/categories/:slug" element={<CategoryProduct />} />
             <Route path="/about" element={<About title={"About us"} description={"This is description"} />} />
             <Route path="/product" element={<Product title={"Our products"} description={"This is description"} />} />
             <Route path="/policy" element={<Policy />} />

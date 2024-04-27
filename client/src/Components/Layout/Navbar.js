@@ -4,10 +4,13 @@ import { GiShoppingBag } from "react-icons/gi";
 import { useAuth } from '../../Context/AuthContext';
 import { toast } from 'react-toastify';
 import Search from './../Form/Search';
+import { useCategories } from '../../Hooks/useCategories';
 
 const Navbar = () => {
     const [auth, setAuth] = useAuth();
     const navigate = useNavigate();
+
+    const categories = useCategories();
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -33,9 +36,26 @@ const Navbar = () => {
                         <li className="nav-item">
                             <NavLink to="/" className="nav-link" aria-current="page">Home</NavLink>
                         </li>
-                        <li className="nav-item">
-                            <NavLink to="/product" className="nav-link">Category</NavLink>
+                        <li className="nav-item dropdown">
+                            <Link to={"/"} className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Categories
+                            </Link>
+                            <ul className="dropdown-menu">
+                                <div>
+                                    <li><Link to={"/"} className="dropdown-item" >All Categories</Link></li>
+                                    <li><hr className="dropdown-divider" /></li>
+                                </div>
+                                {categories && categories.map((category, index) => (
+                                    <li key={index}>
+                                        <Link to={`/categories/${category.slug}`} className="dropdown-item">
+                                            {category.name}
+                                        </Link>
+                                        {index !== categories.length - 1 && <hr className="dropdown-divider" />}
+                                    </li>
+                                ))}
+                            </ul>
                         </li>
+
                         {!localStorage.getItem('auth') ? (
                             <>
                                 <li className="nav-item">
@@ -45,19 +65,6 @@ const Navbar = () => {
                                     <NavLink to="/login" className="nav-link">Login</NavLink>
                                 </li>
                             </>) :
-                            // ( <li className="nav-item dropdown">
-                            //     <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            //         User
-                            //     </a>
-                            //     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                            //         <NavLink to="/dashboard" className="dropdown-item">
-                            //             Dashboard
-                            //         </NavLink>
-                            //         <button onClick={handleClick} className="dropdown-item">
-                            //             Logout
-                            //         </button>
-                            //     </div>
-                            // </li>)
                             <>
                                 <li className="nav-item">
                                     <NavLink to={`/dashboard/${auth?.user?.role === 1 ? "admin/profile" : "user/profile"}`} className="nav-link"> Dashboard </NavLink>
@@ -66,15 +73,6 @@ const Navbar = () => {
                                     <button onClick={handleClick} className="nav-link"> Logout</button>
                                 </li>
                             </>
-                            // <li className="nav-item dropdown">
-                            //     <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            //         User
-                            //     </a>
-                            //     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                            //         <NavLink to="/dashboard" className="dropdown-item" href="#">Dashboard</NavLink>
-                            //         <button onClick={handleClick} className="nav-link">Logout</button>
-                            //     </div>
-                            // </li>
                         }
 
                         <li className="nav-item">
